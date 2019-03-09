@@ -43,9 +43,43 @@ class Character_Stat(db.Model):
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
 
+class Character_Status(db.Model):
+	__tablename__ = 'characters_statuses'
+	id = db.Column(db.Integer, primary_key=True)
+	character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+	status_id = db.Column(db.Integer, db.ForeignKey('statuses.id'))
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
 class Effect(db.Model):
 	__tablename__ = 'effects'
 	id = db.Column(db.Integer, primary_key=True)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+class Item(db.Model):
+	__tablename__ = 'items'
+	id = db.Column(db.Integer, primary_key=True)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+class Item_Ability(db.Model):
+	__tablename__ = 'items_abilities'
+	id = db.Column(db.Integer, primary_key=True)
+	item_id = db.Column(db.Integer, db.ForeignKey('items.id'))
+	ability_id = db.Column(db.Integer, db.ForeignKey('abilities.id'))
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+class Item_Stat(db.Model):
+	__tablename__ = 'items_stats'
+	id = db.Column(db.Integer, primary_key=True)
+	item_id = db.Column(db.Integer, db.ForeignKey('items.id'))
+	stat_id = db.Column(db.Integer, db.ForeignKey('stats.id'))
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
@@ -69,6 +103,10 @@ class Map_Tile(db.Model):
 class Tile(db.Model):
 	__tablename__ = 'tiles'
 	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.Text)
+	filename = db.Column(db.Text)
+	tile_width = db.Column(db.Number)
+	tile_height = db.Column(db.Number)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
@@ -90,6 +128,13 @@ class Role(db.Model):
 
 class Stat(db.Model):
 	__tablename__ = 'stats'
+	id = db.Column(db.Integer, primary_key=True)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+class Status(db.Model):
+	__tablename__ = 'statuses'
 	id = db.Column(db.Integer, primary_key=True)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
