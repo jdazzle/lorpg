@@ -2,3 +2,5 @@ Flask
 Flask-Migrate
 flask-socketio
 Flask-SQLAlchemy
+passlib
+sqlalchemy_utils

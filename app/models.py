@@ -1,6 +1,7 @@
 from . import db
 from datetime import datetime
 from sqlalchemy import sql
+from sqlalchemy_utils import PasswordType
 
 class Ability(db.Model):
 	__tablename__ = 'abilities'
@@ -105,8 +106,8 @@ class Tile(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.Text)
 	filename = db.Column(db.Text)
-	tile_width = db.Column(db.Number)
-	tile_height = db.Column(db.Number)
+	tile_width = db.Column(db.Float)
+	tile_height = db.Column(db.Float)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
@@ -143,6 +144,14 @@ class Status(db.Model):
 class User(db.Model):
 	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.Text)
+	password = db.Column(PasswordType(
+		schemes=[
+			'pbkdf2_sha512',
+			'md5_crypt'
+		],
+		deprecated=['md5_crypt']
+	))
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
