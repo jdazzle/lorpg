@@ -1,6 +1,9 @@
 Flask
+flask-login
 Flask-Migrate
+Flask-Principal
 flask-socketio
 Flask-SQLAlchemy
+Flask-WTF
 passlib
 sqlalchemy_utils

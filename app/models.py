@@ -1,5 +1,6 @@
 from . import db
 from datetime import datetime
+from flask_login import UserMixin
 from sqlalchemy import sql
 from sqlalchemy_utils import PasswordType
 
@@ -141,7 +142,7 @@ class Status(db.Model):
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.Text)
@@ -155,6 +156,11 @@ class User(db.Model):
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
+
+	@property
+	def is_active(self):
+		return self.deleted_at == None
+	
 
 class User_Role(db.Model):
 	__tablename__ = 'users_roles'
