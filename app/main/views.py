@@ -1,7 +1,7 @@
 from . import main
 from .. import socketio
-from flask import current_app, render_template
-from flask_login import login_user
+from flask import current_app, jsonify, redirect, render_template, url_for
+from flask_login import login_user, login_required
 from flask_principal import Identity, identity_changed
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
@@ -12,7 +12,7 @@ from app.models import *
 @main.route('/')
 def index():
 	form = LoginForm()
-	return render_template('main/index.html', form=form)
+	return render_template('main/login.html', form=form)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -27,8 +27,28 @@ def login():
 			login_user(user)
 			identity_changed.send(current_app._get_current_object(),
 				identity=Identity(user.id))
-			print('success')
-	return render_template('main/index.html', form=form)
+			return redirect(url_for('main.game'))
+			
+	return render_template('main/login.html', form=form)
+
+@main.route('/game', methods=['GET'])
+@login_required
+def game():
+	return render_template('main/game.html')
+
+@main.route('/user/<id>/characters')
+@login_required
+def get_user_characters(id):
+	return_json = []
+	user = User.query.filter_by(id=id).first()
+	if user:
+		for character in user.characters:
+			character_json = {
+				'id': character.id,
+				'name': character.name
+			}
+			return_json.append(character_json)
+	return jsonify(return_json)
 
 @socketio.on('my event')
 def handle_my_event(json):

@@ -23,9 +23,13 @@ class Ability_Effect(db.Model):
 class Character(db.Model):
 	__tablename__ = 'characters'
 	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	name = db.Column(db.Text)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
+
+	user = db.relationship('User', foreign_keys=user_id, backref='characters')
 
 class Character_Ability(db.Model):
 	__tablename__ = 'characters_abilities'
@@ -89,6 +93,7 @@ class Item_Stat(db.Model):
 class Map(db.Model):
 	__tablename__ = 'maps'
 	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.Text)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)

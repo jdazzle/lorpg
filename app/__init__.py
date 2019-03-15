@@ -24,10 +24,9 @@ def create_app(config_name):
 	db.init_app(app)
 	login_manager.init_app(app)
 
-	from .models import User
+	from .models import User, Character, Map
 	@app.before_first_request
-	def create_admin_user():
-		print('1')
+	def create_default_data():
 		admin_user = User.query.filter_by(id=1).first()
 		if not admin_user:
 			new_admin_user = User(
@@ -35,6 +34,21 @@ def create_app(config_name):
 				password = 'password'
 			)
 			db.session.add(new_admin_user)
+			db.session.commit()
+			
+			new_admin_character = Character(
+				user_id = new_admin_user.id,
+				name = 'Admin'
+			)
+			db.session.add(new_admin_character)
+			db.session.commit()
+
+		first_map = Map.query.filter_by(id=1).first()
+		if not first_map:
+			new_map = Map(
+				name = 'admin_map'
+			)
+			db.session.add(new_map)
 			db.session.commit()
 
 	return app
