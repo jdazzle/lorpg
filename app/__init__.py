@@ -18,8 +18,12 @@ def create_app(config_name):
 	config[config_name].init_app(app)
 
 	from .main import main as main_blueprint
+	from .character import character as character_blueprint
+	from .user import user as user_blueprint
 
 	app.register_blueprint(main_blueprint)
+	app.register_blueprint(character_blueprint)
+	app.register_blueprint(user_blueprint)
 
 	db.init_app(app)
 	login_manager.init_app(app)

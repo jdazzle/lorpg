@@ -6,4 +6,5 @@ flask-socketio
 Flask-SQLAlchemy
 Flask-WTF
 passlib
+psycopg2
 sqlalchemy_utils
