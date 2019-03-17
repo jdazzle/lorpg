@@ -33,6 +33,10 @@ app.renderer.view.style.display = "block";
 app.renderer.autoResize = true;
 app.renderer.resize(window.innerWidth - 40, window.innerHeight - 40);
 
+window.addEventListener("resize", function() {
+  app.renderer.resize(window.innerWidth - 40, window.innerHeight - 40);
+});
+
 //Load images into PIXI loader
 //loader
 //	.add('static/images/gui/bg_01_02.png')
@@ -70,6 +74,11 @@ function change_stage(strStageName){
 	switch(strStageName){
 		case 'character_select':{
 			app.stage = character_select_stage_container;
+			break;
+		}
+		case 'map':{
+			app.stage = map_container;
+			break;
 		}
 	}
 

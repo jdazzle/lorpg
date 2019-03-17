@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5faea45f550a
+Revision ID: 76cc596ddafd
 Revises: 
-Create Date: 2019-03-16 21:49:17.483545
+Create Date: 2019-03-17 16:01:55.783562
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlalchemy_utils
 
 
 # revision identifiers, used by Alembic.
-revision = '5faea45f550a'
+revision = '76cc596ddafd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,6 +43,9 @@ def upgrade():
     op.create_table('maps',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=True),
+    sa.Column('background_filename', sa.Text(), nullable=True),
+    sa.Column('width', sa.Text(), nullable=True),
+    sa.Column('height', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),

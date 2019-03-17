@@ -98,6 +98,9 @@ class Map(db.Model):
 	__tablename__ = 'maps'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.Text)
+	background_filename = db.Column(db.Text)
+	width = db.Column(db.Text)
+	height = db.Column(db.Text)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)

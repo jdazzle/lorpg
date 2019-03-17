@@ -65,7 +65,7 @@ function get_my_characters(){
 		})
 
 		if(current_map){
-			
+			get_map_by_name(current_map.value);
 		}
 
 	})
