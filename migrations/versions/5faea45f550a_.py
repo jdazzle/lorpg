@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5c60df54a005
+Revision ID: 5faea45f550a
 Revises: 
-Create Date: 2019-03-14 11:41:34.252431
+Create Date: 2019-03-16 21:49:17.483545
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlalchemy_utils
 
 
 # revision identifiers, used by Alembic.
-revision = '5c60df54a005'
+revision = '5faea45f550a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -65,6 +65,7 @@ def upgrade():
     )
     op.create_table('stats',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
@@ -144,6 +145,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('map_id', sa.Integer(), nullable=True),
     sa.Column('tile_id', sa.Integer(), nullable=True),
+    sa.Column('position_x', sa.Integer(), nullable=True),
+    sa.Column('position_y', sa.Integer(), nullable=True),
+    sa.Column('layer_index', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
@@ -177,6 +181,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('character_id', sa.Integer(), nullable=True),
     sa.Column('stat_id', sa.Integer(), nullable=True),
+    sa.Column('value', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),

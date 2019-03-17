@@ -45,9 +45,13 @@ class Character_Stat(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
 	stat_id = db.Column(db.Integer, db.ForeignKey('stats.id'))
+	value = db.Column(db.Text)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
+
+	character = db.relationship('Character', foreign_keys=character_id, backref='stats')
+	stat = db.relationship('Stat', foreign_keys=stat_id, backref='character_stats')
 
 class Character_Status(db.Model):
 	__tablename__ = 'characters_statuses'
@@ -103,9 +107,15 @@ class Map_Tile(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	map_id = db.Column(db.Integer, db.ForeignKey('maps.id'))
 	tile_id = db.Column(db.Integer, db.ForeignKey('tiles.id'))
+	position_x = db.Column(db.Integer)
+	position_y = db.Column(db.Integer)
+	layer_index = db.Column(db.Integer)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
+
+	map = db.relationship('Map', foreign_keys=map_id, backref='map_tiles')
+	tile = db.relationship('Tile', foreign_keys=tile_id, backref='map_tiles')
 
 class Tile(db.Model):
 	__tablename__ = 'tiles'
@@ -136,6 +146,7 @@ class Role(db.Model):
 class Stat(db.Model):
 	__tablename__ = 'stats'
 	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.Text)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow)
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)

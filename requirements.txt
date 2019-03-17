@@ -5,6 +5,7 @@ Flask-Principal
 flask-socketio
 Flask-SQLAlchemy
 Flask-WTF
+jsonpickle
 passlib
 psycopg2
 sqlalchemy_utils

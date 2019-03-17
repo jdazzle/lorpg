@@ -54,11 +54,25 @@ function assetsLoaded(){
 
 function get_my_characters(){
 
-	$.get({
-		url: '/user/' + user_id + '/characters'
-	}).done(function(result){
-		console.log(result);
-		array_characters = result;
+	socket.emit('get_user_characters', {'id': user_id.toString()});
+
+	socket.on('select_character_response', function(json){
+		myCharacter = json;
+		console.log(myCharacter);
+
+		current_map = myCharacter.stats.find(function(element){
+			return element.name == 'current_map';
+		})
+
+		if(current_map){
+			
+		}
+
+	})
+
+	socket.on('get_user_characters_response', function(json){
+		
+		array_characters = json;
 
 		for(var i = 0; i < array_characters.length; i++){
 
@@ -84,28 +98,28 @@ function get_my_characters(){
 
 			container.on('pointerdown', function(){
 
-				console.log(container.character);
-				$.ajax({
+				socket.emit('select_character', container.character);
+
+				/*$.ajax({
 					url: '/selectcharacter',
 					type: 'POST',
 					contentType: 'application/json',
 					data: JSON.stringify(container.character)
 				}).done(function(result){
 					console.log(result);
+					if(result && result.success == true){
+						console.log('good');
+					}
 				}).fail(function(xhr){
 					console.log(xhr);
 				}).always(function(){
 
-				});
+				});*/
 
 			});
 
 		}
 
-	}).fail(function(xhr){
-		console.log(xhr);
-	}).always(function(){
-
-	})
+	});
 
 }

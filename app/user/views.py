@@ -26,22 +26,6 @@ def login():
 			
 	return render_template('main/login.html', form=form)
 
-@user.route('/selectcharacter', methods=['POST'])
-@login_required
-def select_character():
-
-	request_json = request.get_json()
-
-	id = request_json['id']
-
-	selected_character = Character.query.filter_by(id=id).first()
-	
-	if selected_character:
-		current_user.character = selected_character
-		return jsonify({'success': True})
-
-	return jsonify({'success': False})
-
 class LoginForm(FlaskForm):
 	name = StringField('name', validators=[DataRequired()])
 	password = PasswordField('password', validators=[DataRequired()])

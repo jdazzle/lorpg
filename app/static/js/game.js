@@ -21,6 +21,8 @@ let app = new Application({
 	forceCanvas: true
 });
 
+let myCharacter = null;
+
 //Add the PIXIJS app to the div called mainDiv
 var mainDiv = document.getElementById('mainDiv')
 mainDiv.appendChild(app.view)
@@ -55,11 +57,21 @@ app.renderer.resize(window.innerWidth - 40, window.innerHeight - 40);
 
 create_character_select_stage();
 
-app.stage = character_select_stage_container;
+change_stage('character_select');
 
 function gameLoop(delta){
 
 	state(delta);
+
+}
+
+function change_stage(strStageName){
+
+	switch(strStageName){
+		case 'character_select':{
+			app.stage = character_select_stage_container;
+		}
+	}
 
 }
 

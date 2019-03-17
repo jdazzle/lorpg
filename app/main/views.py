@@ -9,6 +9,8 @@ from wtforms.validators import DataRequired
 from app import db, login_manager, principal
 from app.models import *
 
+connected_sockets = []
+
 @main.route('/')
 def index():
 	form = LoginForm()
@@ -18,6 +20,18 @@ def index():
 @login_required
 def game():
 	return render_template('main/game.html')
+
+@socketio.on('connect')
+def on_connect():
+	print('socket connected')
+
+@socketio.on('disconnect')
+def on_disconnect():
+	print('socket_disconnected')
+
+@socketio.on_error()
+def socketio_error_handler(e):
+	print(e)
 
 @socketio.on('my event')
 def handle_my_event(json):
