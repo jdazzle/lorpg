@@ -67,6 +67,11 @@ def create_app(config_name):
 			)
 			db.session.add(stat_character_current_y_position)
 			db.session.commit()
+			stat_character_tileset_filename = Stat(
+				name = "tileset_filename"
+			)
+			db.session.add(stat_character_tileset_filename)
+			db.session.commit()
 
 			character_stat_current_map = Character_Stat(
 				character_id = admin_character.id,
@@ -83,11 +88,18 @@ def create_app(config_name):
 				stat_id = stat_character_current_y_position.id,
 				value = "0"
 			)
+			character_stat_graphic_filename = Character_Stat(
+				character_id = admin_character.id,
+				stat_id = stat_character_tileset_filename.id,
+				value = 'static/images/characters/characters_1.png'
+			)
 			db.session.add(character_stat_current_map)
 			db.session.commit()
 			db.session.add(character_stat_current_x)
 			db.session.commit()
 			db.session.add(character_stat_current_y)
+			db.session.commit()
+			db.session.add(character_stat_graphic_filename)
 			db.session.commit()
 
 		first_map = Map.query.filter_by(id=1).first()

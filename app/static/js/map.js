@@ -1,4 +1,6 @@
-map_container = new PIXI.Container()
+let map_container = new PIXI.Container();
+let map_info = null;
+let map_characters = [];
 
 function get_map_by_name(name){
 
@@ -12,6 +14,8 @@ function get_map_by_name(name){
 }
 
 function load_map(json){
+
+	map_info = json;
 
 	map_container.removeChildren();
 
@@ -41,7 +45,47 @@ function load_map(json){
 
 	}
 
+	load_map_characters();
+
 	change_stage('map');
+
+}
+
+function load_map_characters(){
+
+	socket.emit('get_map_characters_by_name', {'name': map_info['name']});
+
+	socket.on('get_map_characters_by_name_response', function(json){
+		console.log(json);
+		
+		let map_characters = json['map_characters']
+		for(var i = 0; i < map_characters.length; i++){
+			let map_character = map_characters[i];
+			console.log(map_character);
+
+			let sprite_position_x = map_character['stats'].find(function(element){
+				return element['name'] == 'current_x_position';
+			});
+
+			let sprite_position_y = map_character['stats'].find(function(element){
+				return element['name'] == 'current_y_position';
+			});
+
+			let sprite_filename = map_character['stats'].find(function(element){
+				return element['name'] == 'tileset_filename';
+			});
+
+			if(sprite_filename){
+				let texture = PIXI.utils.TextureCache[sprite_filename['value']];
+				let character_sprite = new Sprite(texture);
+				character_sprite.x = sprite_position_x['value'];
+				character_sprite.y = sprite_position_y['value'];
+				map_container.addChild(character_sprite);
+			}
+
+		}
+
+	});
 
 }
 

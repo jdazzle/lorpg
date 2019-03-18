@@ -56,7 +56,6 @@ def select_character(json):
 			json_character_stat['name'] = character_stat.stat.name
 			json_character_stat['value'] = character_stat.value
 			character_stats.append(json_character_stat)
-		print(character_stats)
 		json_selected_character['stats'] = character_stats
 
 		print(json_selected_character)

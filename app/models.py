@@ -94,6 +94,15 @@ class Item_Stat(db.Model):
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
 
+class ImageResource(db.Model):
+	__tablename__ = 'imageresources'
+	id = db.Column(db.Integer, primary_key=True)
+	filename = db.Column(db.Text)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+
 class Map(db.Model):
 	__tablename__ = 'maps'
 	id = db.Column(db.Integer, primary_key=True)
