@@ -20,6 +20,25 @@ class Ability_Effect(db.Model):
 	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 	deleted_at = db.Column(db.DateTime)
 
+class Animation(db.Model):
+	__tablename__ = 'animations'
+	id = db.Column(db.Integer, primary_key=True)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+class Animation_ImageResource(db.Model):
+	__tablename__ = 'animations_imageresources'
+	id = db.Column(db.Integer, primary_key=True)
+	animation_id = db.Column(db.Integer, db.ForeignKey('animations.id'))
+	imageresource_id = db.Column(db.Integer, db.ForeignKey('imageresources.id'))
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+	deleted_at = db.Column(db.DateTime)
+
+	animation = db.relationship('Animation', foreign_keys=animation_id, backref='animation_imageresources')
+	
+
 class Character(db.Model):
 	__tablename__ = 'characters'
 	id = db.Column(db.Integer, primary_key=True)
