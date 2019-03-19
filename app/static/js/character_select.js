@@ -18,12 +18,14 @@ let text_style1 = new PIXI.TextStyle({
 function create_character_select_stage(){
 
 	//Load images into PIXI loader
-	loader
+	/*loader
 		.add('static/images/gui/bg_01_02.png')
 		.add('static/images/gui/button_01_01.png')
 		.add('static/images/gui/frame_c2_01.png')
 		.add('static/images/gui/plank_13.png')
-		.load(assetsLoaded);
+		.load(assetsLoaded);*/
+
+	assetsLoaded();
 
 }
 

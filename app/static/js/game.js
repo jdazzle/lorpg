@@ -37,13 +37,6 @@ window.addEventListener("resize", function() {
   app.renderer.resize(window.innerWidth - 40, window.innerHeight - 40);
 });
 
-//Load images into PIXI loader
-//loader
-//	.add('static/images/gui/bg_01_02.png')
-//	.add('static/images/gui/button_01_01.png')
-//	.add('static/images/gui/frame_c2_01.png')
-//	.load(assetsLoaded);
-
 //This function will be executed when the images have loaded
 //function assetsLoaded(){
 
@@ -59,13 +52,33 @@ window.addEventListener("resize", function() {
 //	app.ticker.add(delta => gameLoop(delta));
 //}
 
-create_character_select_stage();
-
-change_stage('character_select');
+get_image_resources();
 
 function gameLoop(delta){
 
 	state(delta);
+
+}
+
+function get_image_resources(){
+
+	socket.emit('get_image_resources');
+
+	socket.on('get_image_resources_response', function(json){
+		images_to_load = []
+		for(var i = 0; i < json.length; i++){
+			var filename = json[i]['filename']
+			images_to_load.push(filename);
+		}
+
+		//Load images into PIXI loader
+		loader.add(images_to_load).load(function(){
+			console.log('done');
+			create_character_select_stage();
+			change_stage('character_select');
+		});
+
+	});
 
 }
 

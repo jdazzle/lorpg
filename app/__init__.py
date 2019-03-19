@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask_login import LoginManager
 from flask_principal import Principal
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
-from config import config
+from config import config, basedir
+import os, sys
 
 app = Flask(__name__)
 
@@ -30,9 +31,22 @@ def create_app(config_name):
 	app.register_blueprint(map_blueprint)
 	app.register_blueprint(user_blueprint)
 
-	from .models import User, Character, Character_Stat, Map, Map_Tile, Stat, Tile
+	from .models import User, Character, Character_Stat, ImageResource, Map, Map_Tile, Stat, Tile
 	@app.before_first_request
 	def create_default_data():
+
+		imagesdir = os.path.join(basedir, 'app\\static\\images')
+
+		for subdir, dirs, files in os.walk(imagesdir):
+			for file in files:
+				relative_path = os.path.join(os.path.relpath(subdir, file), file).replace('..\\app\\', '').replace('\\', '/')
+				imageresource = ImageResource.query.filter_by(filename=relative_path).first()
+				if not imageresource:
+					new_imageresource = ImageResource(
+						filename = relative_path
+					)
+					db.session.add(new_imageresource)
+					db.session.commit()
 
 		admin_user = User.query.filter_by(id=1).first()
 		if not admin_user:

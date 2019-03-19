@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 76cc596ddafd
+Revision ID: 7e6abfda516c
 Revises: 
-Create Date: 2019-03-17 16:01:55.783562
+Create Date: 2019-03-18 21:47:31.336087
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlalchemy_utils
 
 
 # revision identifiers, used by Alembic.
-revision = '76cc596ddafd'
+revision = '7e6abfda516c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,14 @@ def upgrade():
     )
     op.create_table('effects',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('deleted_at', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('imageresources',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('filename', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
@@ -225,6 +233,7 @@ def downgrade():
     op.drop_table('privileges')
     op.drop_table('maps')
     op.drop_table('items')
+    op.drop_table('imageresources')
     op.drop_table('effects')
     op.drop_table('abilities')
     # ### end Alembic commands ###

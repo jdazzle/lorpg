@@ -31,17 +31,15 @@ function load_map(json){
 
 	if(json['background_filename']){
 		console.log(json['background_filename']);
-		loader.add(json['background_filename']).load(function(){
-			let background_tiling_sprite = new PIXI.extras.TilingSprite(
-				resources[json['background_filename']].texture,
-				map_width,
-				map_height
-			)
-			map_container.addChild(background_tiling_sprite);
-			map_container.scale.set(2);
-			map_container.x = app.renderer.width / 2 - map_container.width / 2;
-			map_container.y = app.renderer.height / 2 - map_container.height / 2;
-		});
+		let background_tiling_sprite = new PIXI.extras.TilingSprite(
+			resources[json['background_filename']].texture,
+			map_width,
+			map_height
+		)
+		map_container.addChild(background_tiling_sprite);
+		map_container.scale.set(2);
+		map_container.x = app.renderer.width / 2 - map_container.width / 2;
+		map_container.y = app.renderer.height / 2 - map_container.height / 2;
 
 	}
 
